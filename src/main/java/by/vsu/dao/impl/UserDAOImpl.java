@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(4, userRole.name());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error creating user", e);
+            throw new RuntimeException("Ошибка добавления пользователя", e);
         }
     }
 
@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
                 users.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to fetch users", e);
+            throw new RuntimeException("Ошибка получения пользователей", e);
         }
         return users;
     }
@@ -53,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to fetch user", e);
+            throw new RuntimeException("Ошибка получения пользователя", e);
         }
         return null;
     }
