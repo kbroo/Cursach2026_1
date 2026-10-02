@@ -1,7 +1,7 @@
 package by.vsu.dao.impl;
 
 import by.vsu.dao.UserDAO;
-import by.vsu.model.Role;
+import by.vsu.model.enums.Role;
 import by.vsu.model.User;
 import by.vsu.util.DBUtil;
 

@@ -1,5 +1,7 @@
 package by.vsu.model;
 
+import by.vsu.model.enums.Role;
+
 public class User {
     private int userId;
     private String userName;
