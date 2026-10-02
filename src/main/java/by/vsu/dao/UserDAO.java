@@ -6,7 +6,7 @@ import by.vsu.model.User;
 import java.util.List;
 
 public interface UserDAO {
-    void createUser(String userName, String userEmail, String hashPassword, Role userRole);
+    boolean createUser(String userName, String userEmail, String hashPassword, Role userRole);
     List<User> getAllUsers();
     User getUser(int id);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public void createUser(String userName, String userEmail, String hashPassword, Role userRole) {
+    public boolean createUser(String userName, String userEmail, String hashPassword, Role userRole) {
         String sql = "INSERT INTO users (username, email, hashPassword, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(2, userEmail);
             ps.setString(3, hashPassword);
             ps.setString(4, userRole.name());
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка добавления пользователя", e);
         }
