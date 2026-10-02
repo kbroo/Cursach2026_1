@@ -12,8 +12,7 @@ public class DBUtil {
     private static String password;
 
     static {
-        try (InputStream is = DBUtil.class.getClassLoader()
-                .getResourceAsStream("db.properties")) {
+        try (InputStream is = DBUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
 
             Properties props = new Properties();
             props.load(is);
@@ -31,7 +30,7 @@ public class DBUtil {
 
     private DBUtil() {}
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
 }
