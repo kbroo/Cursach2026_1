@@ -18,7 +18,7 @@ public class HashPasswordUtil {
         }
     }
 
-    public static boolean verifyPassword(String expected, String actual) {
-        return hashPassword(actual).equals(expected);
+    public static boolean verifyPassword(String storedHash, String openPassword) {
+        return hashPassword(openPassword).equals(storedHash);
     }
 }
