@@ -1,4 +1,4 @@
-package by.vsu.exception;
+package by.vsu.exception.validation;
 
 public class ValidationException extends RuntimeException {
     public ValidationException(String message) {

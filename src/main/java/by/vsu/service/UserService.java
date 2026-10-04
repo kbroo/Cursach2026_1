@@ -2,7 +2,7 @@ package by.vsu.service;
 
 import by.vsu.dao.UserDAO;
 import by.vsu.dao.impl.UserDAOImpl;
-import by.vsu.exception.ValidationException;
+import by.vsu.exception.validation.ValidationException;
 import by.vsu.model.User;
 import by.vsu.model.enums.Role;
 import by.vsu.util.HashPasswordUtil;
@@ -22,7 +22,7 @@ public class UserService {
             throw new ServiceException("Пользователь с таким именем или почтой уже существует");
         }
         String hashPassword = HashPasswordUtil.hashPassword(password);
-        return userDAO.createUser(userName, userEmail, hashPassword, Role.USER);
+        return userDAO.save(userName, userEmail, hashPassword, Role.USER);
     }
 
     public User loginWithUserName(String userName, String password) {

@@ -17,6 +17,13 @@ public class User {
         this.userRole = userRole;
     }
 
+    public User(String userName, String userEmail, String hashPassword, Role userRole) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.hashPassword = hashPassword;
+        this.userRole = userRole;
+    }
+
     public int getUserId() {
         return userId;
     }

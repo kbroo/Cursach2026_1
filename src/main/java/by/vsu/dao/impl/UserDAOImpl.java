@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean createUser(String userName, String userEmail, String hashPassword, Role userRole) {
+    public boolean save(String userName, String userEmail, String hashPassword, Role userRole) {
         String sql = "INSERT INTO users (username, email, hashPassword, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

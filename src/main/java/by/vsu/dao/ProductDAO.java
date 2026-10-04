@@ -7,8 +7,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductDAO {
-    boolean createProduct(String name, String description, Category category,
+    int save(String name, String description, Category category,
                        String imageUrl, BigDecimal price, int stock);
     List<Product> getAllProducts();
-    Product getProduct(int id);
+    Product getProductById(int id);
+    Product getProductByName(String name);
 }
