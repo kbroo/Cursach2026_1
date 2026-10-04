@@ -1,6 +1,7 @@
 package by.vsu.dao.impl;
 
 import by.vsu.dao.UserDAO;
+import by.vsu.exception.DAOException;
 import by.vsu.model.enums.Role;
 import by.vsu.model.User;
 import by.vsu.util.DBUtil;
@@ -21,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(4, userRole.name());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка добавления пользователя", e);
+            throw new DAOException("Ошибка добавления пользователя", e);
         }
     }
 
@@ -36,13 +37,13 @@ public class UserDAOImpl implements UserDAO {
                 users.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка получения пользователей", e);
+            throw new DAOException("Ошибка получения пользователей", e);
         }
         return users;
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUserById(int id) {
         String sql = "SELECT id, hashPassword, username, email, role FROM users WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -53,7 +54,41 @@ public class UserDAOImpl implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка получения пользователя", e);
+            throw new DAOException("Ошибка получения пользователя по id", e);
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        String sql = "SELECT id, username, email, hashPassword, role FROM users WHERE username = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка при получении пользователя по username", e);
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        String sql = "SELECT id, username, email, hashPassword, role FROM users WHERE email = ?";
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка при получении пользователя по email", e);
         }
         return null;
     }
