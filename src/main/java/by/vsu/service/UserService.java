@@ -12,7 +12,7 @@ import by.vsu.exception.ServiceException;
 public class UserService {
     private final UserDAO userDAO = new UserDAOImpl();
 
-    public boolean register(String userName, String userEmail, String password) {
+    public User register(String userName, String userEmail, String password) {
         try {
             UserValidator.validateRegistration(userName, userEmail, password);
         } catch (ValidationException e) {
@@ -22,7 +22,10 @@ public class UserService {
             throw new ServiceException("Пользователь с таким именем или почтой уже существует");
         }
         String hashPassword = HashPasswordUtil.hashPassword(password);
-        return userDAO.save(userName, userEmail, hashPassword, Role.USER);
+        User user = new User(userName, userEmail, hashPassword, Role.USER);
+        int id = userDAO.save(user);
+        user.setUserId(id);
+        return user;
     }
 
     public User loginWithUserName(String userName, String password) {

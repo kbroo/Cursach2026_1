@@ -1,14 +1,16 @@
 package by.vsu.validator;
 
 import by.vsu.exception.validation.product.*;
+import by.vsu.model.enums.Category;
 
 import java.math.BigDecimal;
 
 public class ProductValidator {
-    public static void validateProduct(String name, String description, String imageUrl,
-                                BigDecimal price, int stock) {
+    public static void validateProduct(String name, String description, Category category,
+                                       String imageUrl, BigDecimal price, int stock) {
         validateName(name);
         validateDescription(description);
+        validateCategory(category);
         validateImageUrl(imageUrl);
         validatePrice(price);
         validateStock(stock);
@@ -28,10 +30,16 @@ public class ProductValidator {
             throw new InvalidProductDescriptionException("Описание товара не может быть пустым");
         }
         if (description.length() < 10) {
-            throw new InvalidProductDescriptionException("Описание должно иметь не менее 50 символов");
+            throw new InvalidProductDescriptionException("Описание должно иметь не менее 10 символов");
         }
         if (description.length() > 2000) {
             throw new InvalidProductDescriptionException("Описание должно иметь не более 2000 символов");
+        }
+    }
+
+    public static void validateCategory(Category category) {
+        if (category == null) {
+            throw new InvalidProductCategoryException("Категория не выбрана");
         }
     }
 

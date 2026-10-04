@@ -12,15 +12,21 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean save(String userName, String userEmail, String hashPassword, Role userRole) {
+    public int save(User user) {
         String sql = "INSERT INTO users (username, email, hashPassword, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userName);
-            ps.setString(2, userEmail);
-            ps.setString(3, hashPassword);
-            ps.setString(4, userRole.name());
-            return ps.executeUpdate() > 0;
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserEmail());
+            ps.setString(3, user.getHashPassword());
+            ps.setString(4, user.getUserRole().name());
+            ps.executeUpdate();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+            throw new DAOException("Ошибка получения id добавленного пользователя");
         } catch (SQLException e) {
             throw new DAOException("Ошибка добавления пользователя", e);
         }

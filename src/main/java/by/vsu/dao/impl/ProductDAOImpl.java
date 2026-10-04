@@ -13,20 +13,20 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
     @Override
-    public int save(String name, String description, Category category,
-                              String imageUrl, BigDecimal price, int stock) {
+    public int save(Product product) {
         String sql = "INSERT INTO products (name, description, category, imageUrl, price, stock) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setString(3, category.name());
-            ps.setString(4, imageUrl);
-            ps.setBigDecimal(5, price);
-            ps.setInt(6, stock);
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setString(3, product.getCategory().name());
+            ps.setString(4, product.getImageUrl());
+            ps.setBigDecimal(5, product.getPrice());
+            ps.setInt(6, product.getStock());
+            ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    return rs.getInt("id");
+                    return rs.getInt(1);
                 }
             }
             throw new DAOException("Ошибка получения id созданного товара");

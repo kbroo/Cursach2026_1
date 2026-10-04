@@ -16,14 +16,16 @@ public class ProductService {
     public Product createProduct(String name, String description, Category category,
                                  String imageUrl, BigDecimal price, int stock) {
         try {
-            ProductValidator.validateProduct(name, description, imageUrl, price, stock);
+            ProductValidator.validateProduct(name, description, category, imageUrl, price, stock);
         } catch (ValidationException e) {
             throw new ServiceException(e.getMessage(), e);
         }
         if (productDAO.getProductByName(name) != null) {
             throw new ServiceException("Такой товар уже существует");
         }
-        int id = productDAO.save(name, description, category, imageUrl, price, stock);
-        return new Product(id, name, description, category, imageUrl, price, stock);
+        Product product = new Product(name, description, category, imageUrl, price, stock);
+        int id = productDAO.save(product);
+        product.setId(id);
+        return product;
     }
 }
