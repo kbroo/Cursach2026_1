@@ -13,19 +13,25 @@ public class CartService {
 
     public CartItem addToCart(int userId, int productId, int quantity) {
         if (quantity < 1) {
-            throw new ServiceException("Невозможно добавить 0 товаров в корзину");
+            throw new ServiceException("Невозможно добавить менее 1-го товара в корзину");
         }
         int stock = productDAO.getStock(productId);
-        if (stock <= quantity) {
-            throw new ServiceException("На складе недостаточно товара");
+        if (stock == -1) {
+            throw new ServiceException("Данный товар на складе не найден");
         }
-        if (cartItemDAO.getCartItemByUserAndProduct(userId, productId) == null) {
-            CartItem cartItem = new CartItem(userId, productId, quantity);
-            cartItemDAO.save(cartItem);
-            return cartItem;
-        } else {
-            cartItemDAO.increateCartItem(userId, productId, quantity);
-            return cartItemDAO.getCartItemByUserAndProduct(userId, productId);
+        CartItem existing = cartItemDAO.getCartItemByUserAndProduct(userId, productId);
+        int inCart = (existing != null) ? existing.getQuantity() : 0;
+        if (stock < inCart + quantity) {
+            throw new ServiceException("Недостаточно товара на складе");
         }
+        if (existing != null) {
+            existing.setQuantity(inCart + quantity);
+            cartItemDAO.updateQuantity(existing.getId(), existing.getQuantity());
+            return existing;
+        }
+        CartItem cartItem = new CartItem(userId, productId, quantity);
+        int id = cartItemDAO.save(cartItem);
+        cartItem.setId(id);
+        return cartItem;
     }
 }

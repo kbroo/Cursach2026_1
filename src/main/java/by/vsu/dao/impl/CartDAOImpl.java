@@ -30,40 +30,6 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public void increateCartItem(int userId, int productId, int quantity) {
-        String sql = "UPDATE cartItems SET quantity = quantity + ? WHERE userId = ?";
-        try (Connection conn = DBUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, quantity);
-            ps.setInt(2, userId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("Ошибка увеличения кол-ва товара в корзине");
-        }
-    }
-
-    @Override
-    public CartItem getCartItemById(int id) {
-        String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
-                "p.name AS productName, p.price AS productPrice, p.imageUrl " +
-                "FROM cartItems c " +
-                "JOIN products p ON c.productId = p.id " +
-                "WHERE c.id = ?";
-        try (Connection conn = DBUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapRow(rs);
-                }
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Ошибка получения товара корзины по id", e);
-        }
-        return null;
-    }
-
-    @Override
     public CartItem getCartItemByUserAndProduct(int userId, int productId) {
         String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
                 "p.name AS productName, p.price AS productPrice, p.imageUrl " +
@@ -83,6 +49,19 @@ public class CartDAOImpl implements CartDAO {
             throw new DAOException("Ошибка получения позиции корзины", e);
         }
         return null;
+    }
+
+    @Override
+    public void updateQuantity(int id, int quantity) {
+        String sql = "UPDATE cartItems SET quantity = ? WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка обновления кол-ва товара в корзине", e);
+        }
     }
 
     private CartItem mapRow(ResultSet rs) throws SQLException {
