@@ -25,7 +25,7 @@ public class CartService {
             return cartItem;
         } else {
             cartItemDAO.increateCartItem(userId, productId, quantity);
+            return cartItemDAO.getCartItemByUserAndProduct(userId, productId);
         }
-        return null;
     }
 }
