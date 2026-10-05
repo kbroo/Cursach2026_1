@@ -85,6 +85,36 @@ public class ProductDAOImpl implements ProductDAO {
         return null;
     }
 
+    @Override
+    public int getStock(int id) {
+        String sql = "SELECT stock FROM products WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+            return -1;
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка получения кол-ва товара на складе по id товара", e);
+        }
+    }
+
+    @Override
+    public void updateStock(int id, int value) {
+        String sql = "UPDATE products SET stock = ? WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, value);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка уменьшения остатка товара на складе", e);
+        }
+    }
+
     private Product mapRow(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");

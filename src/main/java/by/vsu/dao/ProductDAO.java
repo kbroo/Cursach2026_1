@@ -11,4 +11,6 @@ public interface ProductDAO {
     List<Product> getAllProducts();
     Product getProductById(int id);
     Product getProductByName(String name);
+    int getStock(int id);
+    void updateStock(int id, int value);
 }
