@@ -36,7 +36,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products";
         try (Connection conn = DBUtil.getConnection();
@@ -52,7 +52,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Product getProductById(int id) {
+    public Product getById(int id) {
         String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Product getProductByName(String name) {
+    public Product getByName(String name) {
         String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products WHERE name = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

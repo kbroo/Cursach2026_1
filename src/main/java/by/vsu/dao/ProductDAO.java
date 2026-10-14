@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ProductDAO {
     int save(Product product);
-    List<Product> getAllProducts();
-    Product getProductById(int id);
-    Product getProductByName(String name);
+    List<Product> getAll();
+    Product getById(int id);
+    Product getByName(String name);
     int getStock(int id);
     void updateStock(int id, int value);
 }

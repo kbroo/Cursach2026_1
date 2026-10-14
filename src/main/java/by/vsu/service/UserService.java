@@ -18,7 +18,7 @@ public class UserService {
         } catch (ValidationException e) {
             throw new ServiceException(e.getMessage(), e);
         }
-        if (userDAO.getUserByName(userName) != null || userDAO.getUserByEmail(userEmail) != null) {
+        if (userDAO.getByName(userName) != null || userDAO.getByEmail(userEmail) != null) {
             throw new ServiceException("Пользователь с таким именем или почтой уже существует");
         }
         String hashPassword = HashPasswordUtil.hashPassword(password);
@@ -32,7 +32,7 @@ public class UserService {
         if (userName == null || userName.isBlank() || password == null || password.isBlank()) {
             throw new ServiceException("Не передано имени или пароля пользователя");
         }
-        User user = userDAO.getUserByName(userName);
+        User user = userDAO.getByName(userName);
         if (user == null || !HashPasswordUtil.verifyPassword(user.getHashPassword(), password)) {
             throw new ServiceException("Неверное имя пользователя или пароль");
         }
@@ -43,7 +43,7 @@ public class UserService {
         if (userEmail == null || userEmail.isBlank() || password == null || password.isBlank()) {
             throw new ServiceException("Не передано почты или пароля пользователя");
         }
-        User user = userDAO.getUserByEmail(userEmail);
+        User user = userDAO.getByEmail(userEmail);
         if (user == null || !HashPasswordUtil.verifyPassword(user.getHashPassword(), password)) {
             throw new ServiceException("Неверная почта пользователя или пароль");
         }

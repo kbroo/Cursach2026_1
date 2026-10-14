@@ -33,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         String sql = "SELECT id, hashPassword, username, email, role FROM users";
         List<User> users = new ArrayList<>();
         try (Connection conn = DBUtil.getConnection();
@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getById(int id) {
         String sql = "SELECT id, hashPassword, username, email, role FROM users WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByName(String username) {
+    public User getByName(String username) {
         String sql = "SELECT id, username, email, hashPassword, role FROM users WHERE username = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -83,7 +83,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getByEmail(String email) {
         String sql = "SELECT id, username, email, hashPassword, role FROM users WHERE email = ?";
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {

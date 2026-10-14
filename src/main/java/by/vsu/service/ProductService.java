@@ -20,7 +20,7 @@ public class ProductService {
         } catch (ValidationException e) {
             throw new ServiceException(e.getMessage(), e);
         }
-        if (productDAO.getProductByName(name) != null) {
+        if (productDAO.getByName(name) != null) {
             throw new ServiceException("Такой товар уже существует");
         }
         Product product = new Product(name, description, category, imageUrl, price, stock);
