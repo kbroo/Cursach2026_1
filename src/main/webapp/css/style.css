@@ -1,0 +1,59 @@
+:root {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.main-header a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.main-header a:hover {
+    transform: scale(1.07);
+}
+
+.main-header {
+    display: flex;
+    background-color: blueviolet;
+    justify-content: space-between;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.logo {
+    padding-left: 25px;
+}
+
+.menu {
+    padding-right: 50px;
+    margin: auto 0;
+}
+
+.menu span:not(:last-child) {
+    padding-right: 25px;
+}
+
+.auth-form {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-form fieldset {
+    margin-top: 23vh;
+    padding: 20px;
+}
+
+.form-group {
+    letter-spacing: 1px;
+}
+
+.reg-error {
+    color: darkred;
+    font-weight: bold;
+}
