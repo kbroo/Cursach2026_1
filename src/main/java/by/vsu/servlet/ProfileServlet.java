@@ -31,6 +31,16 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getPathInfo();
+        HttpSession session = request.getSession(false);
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        if ("/logout".equals(path)) {
+            if (user != null) {
+                session.invalidate();
+            }
+            response.sendRedirect(request.getContextPath() + "/auth");
+            return;
+        }
         request.getRequestDispatcher("/WEB-INF/views/error/notFound.jsp").forward(request, response);
     }
 }
