@@ -7,6 +7,14 @@ body {
     padding: 0;
 }
 
+.main-header {
+    display: flex;
+    background-color: blueviolet;
+    justify-content: space-between;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
 .main-header a {
     display: inline-block;
     text-decoration: none;
@@ -16,14 +24,6 @@ body {
 
 .main-header a:hover {
     transform: scale(1.07);
-}
-
-.main-header {
-    display: flex;
-    background-color: blueviolet;
-    justify-content: space-between;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
 }
 
 .logo {
@@ -47,6 +47,7 @@ body {
 .auth-form fieldset {
     margin-top: 23vh;
     padding: 20px;
+    max-width: 400px;
 }
 
 .form-group {
@@ -54,6 +55,7 @@ body {
 }
 
 .reg-error {
+    display: inline-block;
     color: darkred;
     font-weight: bold;
 }

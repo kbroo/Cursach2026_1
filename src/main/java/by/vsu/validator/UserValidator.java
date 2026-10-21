@@ -17,7 +17,7 @@ public class UserValidator {
             throw new UserValidationException("Минимальная длина имени: 2");
         }
         if (!userName.matches("[a-zA-Z0-9_]+")) {
-            throw new UserValidationException("Имя пользователя может состоять только из букв, цифр и нижнего подчеркивания");
+            throw new UserValidationException("Имя пользователя может состоять только из букв латинского алфавита, цифр и нижнего подчеркивания");
         }
     }
     public static void validateEmail(String email) {

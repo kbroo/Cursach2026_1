@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -50,6 +51,9 @@ public class AuthServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
                 return;
             }
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", newUser);
+            session.setMaxInactiveInterval(10 * 60);
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }
