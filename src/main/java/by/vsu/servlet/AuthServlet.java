@@ -19,6 +19,13 @@ public class AuthServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
+        HttpSession session = request.getSession(false);
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        if (user != null) {
+            response.sendRedirect(request.getContextPath() + "/profile");
+            return;
+        }
+
         if (path == null || path.equals("/")) {
             request.getRequestDispatcher("/WEB-INF/views/auth.jsp").forward(request, response);
             return;
@@ -37,7 +44,7 @@ public class AuthServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-        if (path.equals("/check-registration")) {
+        if ("/check-registration".equals(path)) {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -54,7 +61,27 @@ public class AuthServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("user", newUser);
             session.setMaxInactiveInterval(10 * 60);
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect(request.getContextPath() + "/profile");
+            return;
+        }
+
+        if ("/check-auth".equals(path)) {
+            String usernameOrEmail = request.getParameter("usernameOrEmail");
+            String password = request.getParameter("password");
+            User user;
+            try {
+                if (usernameOrEmail.contains("@")) user = userService.loginWithEmail(usernameOrEmail, password);
+                else user = userService.loginWithUserName(usernameOrEmail, password);
+            } catch (ServiceException e) {
+                request.setAttribute("error", e.getMessage());
+                request.setAttribute("usernameOrEmail", usernameOrEmail);
+                request.getRequestDispatcher("/WEB-INF/views/auth.jsp").forward(request, response);
+                return;
+            }
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+            session.setMaxInactiveInterval(10 * 60);
+            response.sendRedirect(request.getContextPath() + "/profile");
             return;
         }
         request.getRequestDispatcher("/WEB-INF/views/error/notFound.jsp").forward(request, response);
