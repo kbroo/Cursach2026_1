@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ProductDAO {
     int save(Product product);
-    List<Product> getAll();
+    List<Product> getProducts();
+    List<Product> getProducts(int value);
     Product getById(int id);
     Product getByName(String name);
     int getStock(int id);

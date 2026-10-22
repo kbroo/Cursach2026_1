@@ -5,10 +5,14 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #efefef;
 }
 
 .main-header {
     display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     background-color: blueviolet;
     justify-content: space-between;
     border-bottom-left-radius: 12px;
@@ -76,4 +80,54 @@ body {
 
 .out-account {
     color: darkred;
+}
+
+.products-main-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.products-main-section div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+    width: 300px;
+    border: #720fcb 2px solid;
+    border-radius: 10%;
+    text-align: center;
+    box-shadow: 0 0 20px #8c8c8c;
+}
+
+.products-main-section img {
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+    object-fit: cover;
+    border: #720fcb 2px solid;
+    border-radius: 15%;
+}
+
+.products-main-section a {
+    display: inline-block;
+    width: 45%;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+    padding: 3px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    border: #720fcb 2px solid;
+    border-radius: 15px;
+}
+
+.products-main-section a:hover {
+    transform: scale(1.07);
+}
+
+.not-found-elements {
+    margin: auto;
 }

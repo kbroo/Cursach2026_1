@@ -9,6 +9,7 @@ import by.vsu.model.enums.Category;
 import by.vsu.validator.ProductValidator;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductService {
     private final ProductDAO productDAO = new ProductDAOImpl();
@@ -27,5 +28,27 @@ public class ProductService {
         int id = productDAO.save(product);
         product.setId(id);
         return product;
+    }
+
+    public List<Product> getProducts() {
+        List<Product> products = List.of();
+        try {
+            products = productDAO.getProducts();
+            if (products.isEmpty()) throw new ServiceException("Товаров нет");
+        } catch (ServiceException e) {
+            throw new ServiceException("Ошибка получения товаров");
+        }
+        return products;
+    }
+
+    public List<Product> getProducts(int value) {
+        List<Product> products = List.of();
+        try {
+            products = productDAO.getProducts(value);
+            if (products.isEmpty()) throw new ServiceException("Товаров нет");
+        } catch (ServiceException e) {
+            throw new ServiceException("Ошибка получения товаров");
+        }
+        return products;
     }
 }

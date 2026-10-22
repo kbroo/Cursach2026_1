@@ -36,7 +36,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products";
         try (Connection conn = DBUtil.getConnection();
@@ -44,6 +44,24 @@ public class ProductDAOImpl implements ProductDAO {
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 products.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка получения товаров", e);
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> getProducts(int value) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products";
+        int curr = 0;
+        try (Connection conn = DBUtil.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next() && curr < value) {
+                products.add(mapRow(rs));
+                curr++;
             }
         } catch (SQLException e) {
             throw new DAOException("Ошибка получения товаров", e);
