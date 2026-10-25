@@ -25,6 +25,9 @@
                             <caption>${product.name}</caption>
                         </figure>
                         <span>
+                            <c:out value="${product.price}" /> BYN
+                        </span><br>
+                        <span>
                             <a href="${pageContext.request.contextPath}/product?id=${product.id}">Подробнее</a>
                         </span>
                     </div>
