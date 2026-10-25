@@ -27,14 +27,37 @@ public class AuthServlet extends HttpServlet {
         }
 
         if (path == null || path.equals("/")) {
+            HttpSession sessionAuth = request.getSession();
+            String error = (String) sessionAuth.getAttribute("error");
+            String usernameOrEmail = (String) sessionAuth.getAttribute("usernameOrEmail");
+            if (error != null) {
+                request.setAttribute("error", error);
+                sessionAuth.removeAttribute("error");
+            }
+            if (usernameOrEmail != null) {
+                request.setAttribute("usernameOrEmail", usernameOrEmail);
+                sessionAuth.removeAttribute("usernameOrEmail");
+            }
             request.getRequestDispatcher("/WEB-INF/views/auth.jsp").forward(request, response);
             return;
         }
         if (path.equals("/registration")) {
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
-            return;
-        }
-        if (path.equals("/check-registration")) {
+            HttpSession sessionAuth = request.getSession();
+            String error = (String) sessionAuth.getAttribute("error");
+            String username = (String) sessionAuth.getAttribute("username");
+            String email = (String) sessionAuth.getAttribute("email");
+            if (error != null) {
+                request.setAttribute("error", error);
+                sessionAuth.removeAttribute("error");
+            }
+            if (username != null) {
+                request.setAttribute("username", username);
+                sessionAuth.removeAttribute("username");
+            }
+            if (email != null) {
+                request.setAttribute("email", email);
+                sessionAuth.removeAttribute("email");
+            }
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
             return;
         }
@@ -52,10 +75,10 @@ public class AuthServlet extends HttpServlet {
             try {
                 newUser = userService.register(username, email, password);
             } catch (ServiceException e) {
-                request.setAttribute("error", e.getMessage());
-                request.setAttribute("username", username);
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+                request.getSession().setAttribute("error", e.getMessage());
+                request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("email", email);
+                response.sendRedirect(request.getContextPath() + "/auth/registration");
                 return;
             }
             HttpSession session = request.getSession(true);
@@ -73,9 +96,9 @@ public class AuthServlet extends HttpServlet {
                 if (usernameOrEmail.contains("@")) user = userService.loginWithEmail(usernameOrEmail, password);
                 else user = userService.loginWithUserName(usernameOrEmail, password);
             } catch (ServiceException e) {
-                request.setAttribute("error", e.getMessage());
-                request.setAttribute("usernameOrEmail", usernameOrEmail);
-                request.getRequestDispatcher("/WEB-INF/views/auth.jsp").forward(request, response);
+                request.getSession().setAttribute("error", e.getMessage());
+                request.getSession().setAttribute("usernameOrEmail", usernameOrEmail);
+                response.sendRedirect(request.getContextPath() + "/auth");
                 return;
             }
             HttpSession session = request.getSession(true);

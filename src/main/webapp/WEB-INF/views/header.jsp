@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,7 +15,18 @@
         </div>
             <nav class="menu">
                 <span><a href="${pageContext.request.contextPath}/cart">Корзина</a></span>
-                <span class="profile"><a href="${pageContext.request.contextPath}/auth">Профиль</a></span>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user}">
+                        <span class="profile">
+                            <a href="${pageContext.request.contextPath}/auth">
+                                <c:out value="${user.userName}" />
+                            </a>
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="profile"><a href="${pageContext.request.contextPath}/auth">Профиль</a></span>
+                    </c:otherwise>
+                </c:choose>
             </nav>
     </header>
 </body>

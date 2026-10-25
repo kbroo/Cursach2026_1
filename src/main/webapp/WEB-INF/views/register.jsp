@@ -21,6 +21,7 @@
                 <label for="username">Логин:</label><br>
                 <input
                     type="text"
+                    value="<c:out value="${username}" />"
                     id="username"
                     name="username"
                     autocomplete=on
@@ -32,6 +33,7 @@
                 <label for="email">Почта:</label><br>
                 <input
                     type="email"
+                    value="<c:out value="${email}" />"
                     id="email"
                     name="email"
                     autocomplete=on

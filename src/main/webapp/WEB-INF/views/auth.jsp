@@ -18,6 +18,7 @@
                 <label for="usernameOrEmail">Логин или почта:</label><br>
                 <input
                     type="text"
+                    value="<c:out value="${usernameOrEmail}" />"
                     id="usernameOrEmail"
                     name="usernameOrEmail"
                     autocomplete=on
