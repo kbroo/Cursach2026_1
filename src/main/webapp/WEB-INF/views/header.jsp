@@ -12,7 +12,7 @@
     <header class="main-header">
         <div class="header-logo-and-search">
             <h1 class="logo"><a href="${pageContext.request.contextPath}">Faboris</a></h1>
-            <c:if test="${isMainPage}">
+            <c:if test="${isCatalogPage}">
             <span>
                 <form action="${pageContext.request.contextPath}" method="get">
                     <input

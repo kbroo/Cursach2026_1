@@ -39,6 +39,7 @@ public class ProductServlet extends HttpServlet {
                     }
                 }
 
+                request.setAttribute("isCatalogPage", true);
                 request.setAttribute("quantityOfProductInCart", quantityOfProductInCart);
                 request.setAttribute("product", product);
                 request.getRequestDispatcher("/WEB-INF/views/product.jsp").forward(request, response);
@@ -47,6 +48,7 @@ public class ProductServlet extends HttpServlet {
                 }
 
             } catch (NumberFormatException e) {
+                request.setAttribute("isCatalogPage", true);
                 request.setAttribute("error", "Ошибка получения товара");
                 request.getRequestDispatcher("/WEB-INF/views/product.jsp").forward(request, response);
             }
