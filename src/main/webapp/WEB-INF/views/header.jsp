@@ -16,6 +16,7 @@
             <span>
                 <form action="${pageContext.request.contextPath}" method="get">
                     <input
+                        value="${searchValue}"
                         type="text"
                         id="search"
                         name="search"

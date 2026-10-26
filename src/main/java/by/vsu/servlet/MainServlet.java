@@ -28,11 +28,13 @@ public class MainServlet extends HttpServlet {
             products = productService.getLikeName(search);
         } catch (ServiceException e) {
             request.setAttribute("isCatalogPage", true);
+            request.setAttribute("searchValue", search);
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
         request.setAttribute("isCatalogPage", true);
+        request.setAttribute("searchValue", search);
         request.setAttribute("products", products);
         request.setAttribute("searchQuery", search != null ? search : "");
 
