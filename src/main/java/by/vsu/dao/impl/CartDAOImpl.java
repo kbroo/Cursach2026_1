@@ -7,6 +7,8 @@ import by.vsu.util.DBUtil;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartDAOImpl implements CartDAO {
     @Override
@@ -61,6 +63,28 @@ public class CartDAOImpl implements CartDAO {
             throw new DAOException("Ошибка получения позиции корзины", e);
         }
         return null;
+    }
+
+    @Override
+    public List<CartItem> getCartItemsByUser(int userId) {
+        String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
+                "p.name AS productName, p.price AS productPrice, p.imageUrl " +
+                "FROM cartItems c " +
+                "JOIN products p ON c.productId = p.id " +
+                "WHERE c.userId = ?";
+        List<CartItem> items = new ArrayList<>();
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    items.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка получения корзины пользователя", e);
+        }
+        return items;
     }
 
     @Override

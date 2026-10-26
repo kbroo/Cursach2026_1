@@ -4,9 +4,12 @@ import by.vsu.dao.CartDAO;
 import by.vsu.dao.ProductDAO;
 import by.vsu.dao.impl.CartDAOImpl;
 import by.vsu.dao.impl.ProductDAOImpl;
+import by.vsu.dto.Cart;
 import by.vsu.exception.DAOException;
 import by.vsu.exception.ServiceException;
 import by.vsu.model.CartItem;
+
+import java.util.List;
 
 public class CartService {
     private final CartDAO cartItemDAO = new CartDAOImpl();
@@ -38,6 +41,11 @@ public class CartService {
 
     public CartItem getCartItem(int userId, int productId) {
         return cartItemDAO.getCartItemByUserAndProduct(userId, productId);
+    }
+
+    public Cart getCartOfUser(int userId) {
+        List<CartItem> items = cartItemDAO.getCartItemsByUser(userId);
+        return new Cart(items);
     }
 
     public void increaseValueInCart(int userId, int productId, int value) {

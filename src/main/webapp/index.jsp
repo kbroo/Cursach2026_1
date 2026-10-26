@@ -28,7 +28,7 @@
                             <c:out value="${product.price}" /> BYN
                         </span><br>
                         <span>
-                            <a href="${pageContext.request.contextPath}/product?id=${product.id}" target="_blank">Подробнее</a>
+                            <a href="${pageContext.request.contextPath}/product?id=${product.id}">Подробнее</a>
                         </span>
                     </div>
                 </c:forEach>

@@ -62,7 +62,7 @@ public class ProductServlet extends HttpServlet {
             String strProductId = request.getParameter("productId");
             User user = (User) session.getAttribute("user");
             if (user == null) {
-                response.sendRedirect(request.getContextPath() + "/product?id=" + strProductId);
+                response.sendRedirect(request.getContextPath() + "/auth");
                 return;
             }
 
