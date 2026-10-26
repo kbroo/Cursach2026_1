@@ -71,6 +71,24 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public List<Product> getLikeName(String name) {
+        String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products WHERE name LIKE ?";
+        List<Product> products = new ArrayList<>();
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + name + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    products.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка получения товаров.", e);
+        }
+        return products;
+    }
+
+    @Override
     public Product getById(int id) {
         String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();

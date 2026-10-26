@@ -9,12 +9,12 @@
 <body>
     <%@ include file="WEB-INF/views/header.jsp" %>
     <main>
-        <div class="products-main-section">
             <c:if test="${not empty error}">
                 <div class="not-found-elements">
                     <span>${error}</span>
                 </div>
             </c:if>
+        <div class="products-main-section">
             <c:if test="${not empty products}">
                 <c:forEach var="product" items="${products}">
                     <div>

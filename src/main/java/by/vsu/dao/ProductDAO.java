@@ -10,6 +10,7 @@ public interface ProductDAO {
     int save(Product product);
     List<Product> getProducts();
     List<Product> getProducts(int value);
+    List<Product> getLikeName(String name);
     Product getById(int id);
     Product getByName(String name);
     int getStock(int id);

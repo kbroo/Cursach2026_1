@@ -8,8 +8,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("")
@@ -18,16 +20,22 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> products = List.of();
+
+        String search = request.getParameter("search");
+
+        List<Product> products;
         try {
-            products = productService.getProducts(20);
+            products = productService.getLikeName(search);
         } catch (ServiceException e) {
-            request.setAttribute("error", e);
+            request.setAttribute("isMainPage", true);
+            request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
+        request.setAttribute("isMainPage", true);
         request.setAttribute("products", products);
+        request.setAttribute("searchQuery", search != null ? search : "");
+
         request.getRequestDispatcher("index.jsp").forward(request, response);
-        return;
     }
 }

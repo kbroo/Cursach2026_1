@@ -10,9 +10,23 @@
 </head>
 <body>
     <header class="main-header">
-        <div>
+        <div class="header-logo-and-search">
             <h1 class="logo"><a href="${pageContext.request.contextPath}">Faboris</a></h1>
+            <c:if test="${isMainPage}">
+            <span>
+                <form action="${pageContext.request.contextPath}" method="get">
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        placeholder="Поиск по названию"
+                        max=50>
+                    <button type="submit">Search</button>
+                </form>
+            </span>
+            </c:if>
         </div>
+
             <nav class="menu">
                 <span><a href="${pageContext.request.contextPath}/cart">Корзина</a></span>
                 <c:choose>

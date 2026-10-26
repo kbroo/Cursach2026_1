@@ -43,6 +43,36 @@ body {
     padding-left: 25px;
 }
 
+.header-logo-and-search {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo-and-search input {
+    display: inline-block;
+    border: #7018cc 2px solid;
+    border-radius: 15px;
+    padding: 5px;
+    width: 500px;
+    box-shadow: 2px 2px 5px #303030;
+    background-color: #efefef;
+}
+
+.header-logo-and-search button {
+    display: inline-block;
+    border: #7018cc 2px solid;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: 2px 2px 5px #303030;
+    background-color: #efefef;
+    transition: transform 0.3s ease;
+}
+
+.header-logo-and-search button:hover {
+    transform: scale(1.07);
+}
+
 .menu {
     padding-right: 50px;
     margin: auto 0;
@@ -61,6 +91,17 @@ body {
     margin-top: 23vh;
     padding: 20px;
     max-width: 400px;
+    border: #720fcb 2px solid;
+    box-shadow: 0 2px 7px #720fcb;
+}
+
+.auth-form fieldset legend {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.auth-form fieldset {
+    font-weight: 500;
 }
 
 .form-group {
@@ -140,8 +181,18 @@ body {
     transform: scale(1.07);
 }
 
-.not-found-elements {
-    margin: auto;
+.not-found-elements  {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.not-found-elements span {
+    font-weight: 700;
+    font-size: 35px;
+    color: #393939;
+    opacity: 65%;
+    text-shadow: 0 0 50px black;
 }
 
 .product-card {

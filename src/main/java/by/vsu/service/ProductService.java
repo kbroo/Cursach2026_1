@@ -11,6 +11,7 @@ import by.vsu.validator.ProductValidator;
 import org.eclipse.tags.shaded.org.apache.xpath.res.XPATHErrorResources_ru;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
@@ -57,10 +58,25 @@ public class ProductService {
     public Product getById(int id) {
         try {
             Product product = productDAO.getById(id);
-            if (product == null) throw new ServiceException("Получени пустой товар");
+            if (product == null) throw new ServiceException("Получен пустой товар");
             return product;
         } catch (DAOException e) {
             throw new ServiceException("Ошибка получения товара");
+        }
+    }
+
+    public List<Product> getLikeName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return getProducts();
+        }
+        try {
+            List<Product> products = productDAO.getLikeName(name.trim());
+            if (products.isEmpty()) {
+                throw new ServiceException("Ничего не найдено");
+            }
+            return products;
+        } catch (DAOException e) {
+            throw new ServiceException("Ошибка получения товаров по имени", e);
         }
     }
 }
