@@ -2,11 +2,13 @@ package by.vsu.service;
 
 import by.vsu.dao.ProductDAO;
 import by.vsu.dao.impl.ProductDAOImpl;
+import by.vsu.exception.DAOException;
 import by.vsu.exception.ServiceException;
 import by.vsu.exception.validation.ValidationException;
 import by.vsu.model.Product;
 import by.vsu.model.enums.Category;
 import by.vsu.validator.ProductValidator;
+import org.eclipse.tags.shaded.org.apache.xpath.res.XPATHErrorResources_ru;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 public class ProductService {
     private final ProductDAO productDAO = new ProductDAOImpl();
 
-    public Product createProduct(String name, String description, Category category,
+    public Product create(String name, String description, Category category,
                                  String imageUrl, BigDecimal price, int stock) {
         try {
             ProductValidator.validateProduct(name, description, category, imageUrl, price, stock);
@@ -35,7 +37,7 @@ public class ProductService {
         try {
             products = productDAO.getProducts();
             if (products.isEmpty()) throw new ServiceException("Товаров нет");
-        } catch (ServiceException e) {
+        } catch (DAOException e) {
             throw new ServiceException("Ошибка получения товаров");
         }
         return products;
@@ -46,9 +48,19 @@ public class ProductService {
         try {
             products = productDAO.getProducts(value);
             if (products.isEmpty()) throw new ServiceException("Товаров нет");
-        } catch (ServiceException e) {
+        } catch (DAOException e) {
             throw new ServiceException("Ошибка получения товаров");
         }
         return products;
+    }
+
+    public Product getById(int id) {
+        try {
+            Product product = productDAO.getById(id);
+            if (product == null) throw new ServiceException("Получени пустой товар");
+            return product;
+        } catch (DAOException e) {
+            throw new ServiceException("Ошибка получения товара");
+        }
     }
 }

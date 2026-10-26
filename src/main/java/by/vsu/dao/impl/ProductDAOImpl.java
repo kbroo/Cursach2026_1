@@ -54,11 +54,12 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> getProducts(int value) {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products";
+        String sql = "SELECT id, name, description, category, imageUrl, price, stock FROM products LIMIT ?";
         int curr = 0;
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, value);
+            ResultSet rs = ps.executeQuery();
             while (rs.next() && curr < value) {
                 products.add(mapRow(rs));
                 curr++;

@@ -30,6 +30,18 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
+    public void delete(int cartItemId) {
+        String sql = "DELETE FROM cartItems WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, cartItemId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Ошибка при удалении позиции из корзины", e);
+        }
+    }
+
+    @Override
     public CartItem getCartItemByUserAndProduct(int userId, int productId) {
         String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
                 "p.name AS productName, p.price AS productPrice, p.imageUrl " +

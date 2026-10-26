@@ -20,7 +20,7 @@ public class ProfileServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath());
             return;
         }
-        if (path == null || "/".equals(path)) {
+        if (path == null || path.isEmpty() || "/".equals(path)) {
             User user = (User) session.getAttribute("user");
             request.setAttribute("user", user);
             request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
