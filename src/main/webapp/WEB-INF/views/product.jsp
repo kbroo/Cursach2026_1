@@ -64,9 +64,16 @@
                             <c:out value="${product.price}" /> BYN
                         </span>
                     </div>
-                    <span class="product-card-info-stock">
-                        На складе: <span><c:out value="${product.stock}" /></span>
-                    </span>
+                    <c:if test="${product.stock >= 20}">
+                        <span class="product-card-info-stock">
+                            На складе: <span style="color: green"><c:out value="${product.stock}" /></span>
+                        </span>
+                    </c:if>
+                    <c:if test="${product.stock < 20}">
+                        <span class="product-card-info-stock">
+                            На складе: <span style="color: #8c0000"><c:out value="${product.stock}" /></span>
+                        </span>
+                    </c:if>
                 </div>
             </c:if>
         </div>
