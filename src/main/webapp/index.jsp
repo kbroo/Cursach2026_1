@@ -21,6 +21,7 @@
                         <figure>
                             <img
                                 src="${product.imageUrl}"
+                                onerror="this.src='${pageContext.request.contextPath}/img/no_found.jpg';"
                                 loading="lazy"><br>
                             <caption>${product.name}</caption>
                         </figure>

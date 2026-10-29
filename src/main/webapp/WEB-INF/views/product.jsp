@@ -14,6 +14,7 @@
                     <figure>
                         <img
                             src="${product.imageUrl}"
+                            onerror="this.src='${pageContext.request.contextPath}/img/no_found.jpg';"
                             loading="lazy"><br>
                     </figure>
                     <div class="product-card-buy-buttons">

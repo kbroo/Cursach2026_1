@@ -29,6 +29,7 @@
                         <figure>
                             <img
                                 src="${item.imageUrl}"
+                                onerror="this.src='${pageContext.request.contextPath}/img/no_found.jpg';"
                                 loading="lazy"><br>
                         </figure>
                         <div class="cart-item-info">
