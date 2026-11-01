@@ -38,7 +38,7 @@ public class ProfileServlet extends HttpServlet {
             if (user != null) {
                 session.invalidate();
             }
-            response.sendRedirect(request.getContextPath() + "/auth");
+            response.sendRedirect(request.getContextPath());
             return;
         }
         request.getRequestDispatcher("/WEB-INF/views/error/notFound.jsp").forward(request, response);
