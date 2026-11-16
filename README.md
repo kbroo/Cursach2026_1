@@ -45,3 +45,8 @@
     *   **Deployment:** путь к папке `src/main/webapp` вашего проекта.
     *   **Context Path:** `/` (или `/webMarket`). 
 4. `Apply` -> `Run`
+
+### Комментарии:
+* Временно добавление товаров доступно только напрямую через базу данных – в таблицу products.\
+Пример: INSERT INTO `products` (`id`, `name`, `description`, `category`, `imageUrl`, `price`, `stock`) VALUES (NULL, 'name', 'description', 'ELECTRONICS', 'https://i.imgur.com/oa9osNY.jpeg', '4709.99', '35');
+В поле category значения записывать из enum Category.java (src/main/java/model/enums/Category.java)
