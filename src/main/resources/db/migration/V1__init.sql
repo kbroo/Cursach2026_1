@@ -1,0 +1,25 @@
+CREATE TABLE users(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE ,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    hashPassword VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'USER'
+);
+
+CREATE TABLE products(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    imageUrl VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE cartItems(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    productId INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 0,
+    UNIQUE(userId, productId)
+);

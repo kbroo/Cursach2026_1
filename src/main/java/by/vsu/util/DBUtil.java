@@ -3,6 +3,7 @@ package by.vsu.util;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,5 +41,9 @@ public class DBUtil {
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
     }
 }
