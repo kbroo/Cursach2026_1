@@ -31,6 +31,11 @@ public class CartServlet extends HttpServlet {
             Cart cart = cartService.getCartOfUser(user.getUserId());
             request.setAttribute("user", user);
             request.setAttribute("cart", cart);
+            String cartError = (String) session.getAttribute("cartError");
+            if (cartError != null) {
+                request.setAttribute("cartError", cartError);
+                session.removeAttribute("cartError");
+            }
             request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
         }
     }
@@ -62,7 +67,7 @@ public class CartServlet extends HttpServlet {
                     cartService.decreaseValueInCart(user.getUserId(), productId, 1);
                 }
             } catch (ServiceException e) {
-                session.setAttribute("error", e.getMessage());
+                session.setAttribute("cartError", e.getMessage());
             }
 
             response.sendRedirect(request.getContextPath() + "/cart");
