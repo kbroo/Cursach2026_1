@@ -18,11 +18,20 @@
                             loading="lazy"><br>
                     </figure>
                     <div class="product-card-buy-buttons">
+                        <c:if test="${quantityOfProductInCart == 0}">
                         <form method="post" action="${pageContext.request.contextPath}/product/action">
                             <input type="hidden" name="productId" value="${product.id}">
                             <input type="hidden" name="action" value="+">
                             <button type="submit">В корзину</button>
                         </form>
+                        </c:if>
+                        <c:if test="${quantityOfProductInCart != 0}">
+                        <a href="${pageContext.request.contextPath}/cart">
+                            <button type="button">
+                              В корзину
+                            </button>
+                        </a>
+                        </c:if>
 
                         <c:if test="${quantityOfProductInCart != 0}">
 
