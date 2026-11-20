@@ -15,25 +15,25 @@ public class ProfileServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect(request.getContextPath());
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/auth/registration");
             return;
         }
         if (path == null || path.isEmpty() || "/".equals(path)) {
-            User user = (User) session.getAttribute("user");
             request.setAttribute("user", user);
             request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
             return;
         }
-        request.getRequestDispatcher("/WEB-INF/views/error/notFound.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-        HttpSession session = request.getSession(false);
-        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         if ("/logout".equals(path)) {
             if (user != null) {
                 session.invalidate();
@@ -41,6 +41,6 @@ public class ProfileServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath());
             return;
         }
-        request.getRequestDispatcher("/WEB-INF/views/error/notFound.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }
