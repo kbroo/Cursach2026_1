@@ -28,9 +28,16 @@
                         <span>
                             <c:out value="${product.price}" /> BYN
                         </span><br>
-                        <span>
-                            <a href="${pageContext.request.contextPath}/product?id=${product.id}">Подробнее</a>
-                        </span>
+                        <c:if test="${product.stock > 0}">
+                            <span>
+                                <a href="${pageContext.request.contextPath}/product?id=${product.id}">Подробнее</a>
+                            </span>
+                        </c:if>
+                        <c:if test="${product.stock <= 0}">
+                            <span>
+                                <a>Нет на складе</a>
+                            </span>
+                        </c:if>
                     </div>
                 </c:forEach>
             </c:if>
