@@ -10,9 +10,10 @@ public class CartItem {
     private String productName;
     private BigDecimal productPrice;
     private String imageUrl;
+    private int stock;
 
     public CartItem(int id, int userId, int productId, int quantity,
-                    String productName, BigDecimal productPrice, String imageUrl) {
+                    String productName, BigDecimal productPrice, String imageUrl, int stock) {
         this.id = id;
         this.userId = userId;
         this.productId = productId;
@@ -20,7 +21,9 @@ public class CartItem {
         this.productName = productName;
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
+        this.stock = stock;
     }
+
     public CartItem(int userId, int productId, int quantity) {
         this.userId = userId;
         this.productId = productId;
@@ -48,6 +51,9 @@ public class CartItem {
     public String getImageUrl() {
         return imageUrl;
     }
+    public int getStock() {
+        return stock;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -69,5 +75,8 @@ public class CartItem {
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

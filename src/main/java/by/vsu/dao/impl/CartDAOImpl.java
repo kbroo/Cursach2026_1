@@ -46,7 +46,7 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public CartItem getCartItemByUserAndProduct(int userId, int productId) {
         String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
-                "p.name AS productName, p.price AS productPrice, p.imageUrl " +
+                "p.name AS productName, p.price AS productPrice, p.imageUrl, p.stock " +
                 "FROM cartItems c " +
                 "JOIN products p ON c.productId = p.id " +
                 "WHERE c.userId = ? AND c.productId = ?";
@@ -68,7 +68,7 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public List<CartItem> getCartItemsByUser(int userId) {
         String sql = "SELECT c.id, c.userId, c.productId, c.quantity, " +
-                "p.name AS productName, p.price AS productPrice, p.imageUrl " +
+                "p.name AS productName, p.price AS productPrice, p.imageUrl, p.stock " +
                 "FROM cartItems c " +
                 "JOIN products p ON c.productId = p.id " +
                 "WHERE c.userId = ?";
@@ -108,6 +108,8 @@ public class CartDAOImpl implements CartDAO {
         String productName = rs.getString("productName");
         BigDecimal productPrice = rs.getBigDecimal("productPrice");
         String imageUrl = rs.getString("imageUrl");
-        return new CartItem(id, userId, productId, quantity, productName, productPrice, imageUrl);
+        int stock = rs.getInt("stock");
+        
+        return new CartItem(id, userId, productId, quantity, productName, productPrice, imageUrl, stock);
     }
 }
