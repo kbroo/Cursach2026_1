@@ -1,7 +1,5 @@
 package by.vsu.model;
 
-import by.vsu.model.enums.OrderStatus;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -11,23 +9,20 @@ public class OrderItem {
     private int productId;
     private int quantity;
     private BigDecimal priceAtMoment;
-    private LocalDateTime createdAt;
 
-    public OrderItem(int orderId, int productId, int quantity, BigDecimal priceAtMoment, LocalDateTime createdAt) {
+    public OrderItem(int orderId, int productId, int quantity, BigDecimal priceAtMoment) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
         this.priceAtMoment = priceAtMoment;
-        this.createdAt = createdAt;
     }
 
-    public OrderItem(int id, int orderId, int productId, int quantity, BigDecimal priceAtMoment, LocalDateTime createdAt) {
+    public OrderItem(int id, int orderId, int productId, int quantity, BigDecimal priceAtMoment) {
         this.id = id;
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
         this.priceAtMoment = priceAtMoment;
-        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -45,9 +40,6 @@ public class OrderItem {
     public BigDecimal getPriceAtMoment() {
         return priceAtMoment;
     }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -63,9 +55,6 @@ public class OrderItem {
     }
     public void setPriceAtMoment(BigDecimal priceAtMoment) {
         this.priceAtMoment = priceAtMoment;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override
