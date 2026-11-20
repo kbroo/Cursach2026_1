@@ -39,6 +39,9 @@
                             <span class= "cart-item-quantity">
                                 <c:out value="${item.quantity}" /> Шт.
                             </span>
+                            <span>
+                                В наличии: <c:out value="${item.stock}" /> Шт<br>
+                            </span>
                             <span class= "cart-item-price">
                                 <c:out value="${item.productPrice}" /> BYN
                             </span>
@@ -74,7 +77,7 @@
                     <c:out value="${cart.totalPrice}" /> BYN
                 </span><br>
                 <div class="cart-checkout">
-                    <form method="post" action="${pageContext.request.contextPath}/cart/checkout">
+                    <form method="get" action="${pageContext.request.contextPath}/cart/checkout">
                         <button>Заказать</button>
                     </form>
                 <div>

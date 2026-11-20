@@ -22,6 +22,11 @@ public class ProfileServlet extends HttpServlet {
             return;
         }
         if (path == null || path.isEmpty() || "/".equals(path)) {
+            String info = (String) session.getAttribute("info");
+            if (info != null) {
+                request.setAttribute("info", info);
+                session.removeAttribute("info");
+            }
             request.setAttribute("user", user);
             request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
             return;

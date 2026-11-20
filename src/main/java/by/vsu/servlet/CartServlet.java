@@ -5,6 +5,7 @@ import by.vsu.exception.ServiceException;
 import by.vsu.model.CartItem;
 import by.vsu.model.User;
 import by.vsu.service.CartService;
+import by.vsu.service.OrderService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,13 +18,14 @@ import java.io.IOException;
 @WebServlet("/cart/*")
 public class CartServlet extends HttpServlet {
     private final CartService cartService = new CartService();
+    private final OrderService orderService = new OrderService();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getPathInfo();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         if (path == null || path.isEmpty() || "/".equals(path)) {
-            HttpSession session = request.getSession();
-            User user = (session != null) ? (User) session.getAttribute("user") : null;
             if (user == null) {
                 response.sendRedirect(request.getContextPath() + "/auth");
                 return;
@@ -37,6 +39,25 @@ public class CartServlet extends HttpServlet {
                 session.removeAttribute("cartError");
             }
             request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
+            return;
+        }
+        if ("/checkout".equals(path)) {
+            if (user == null) {
+                response.sendRedirect(request.getContextPath() + "/profile");
+                return;
+            }
+            Cart cart = cartService.getCartOfUser(user.getUserId());
+            if (cart == null) {
+                response.sendRedirect(request.getContextPath() + "/");
+                return;
+            }
+            String checkoutError = (String) session.getAttribute("checkout-error");
+            if (checkoutError != null) {
+                request.setAttribute("checkoutError", checkoutError);
+                session.removeAttribute("checkoutError");
+            }
+            request.setAttribute("cart", cart);
+            request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
         }
     }
 
@@ -44,10 +65,10 @@ public class CartServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getPathInfo();
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         if ("/action".equals(path)) {
             String action = request.getParameter("action");
             String strProductId = request.getParameter("productId");
-            User user = (User) session.getAttribute("user");
             if (user == null) {
                 response.sendRedirect(request.getContextPath() + "/auth");
                 return;
@@ -71,6 +92,26 @@ public class CartServlet extends HttpServlet {
             }
 
             response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        if("/checkout-check".equals(path)) {
+            if (user == null) {
+                response.sendRedirect(request.getContextPath() + "/");
+                return;
+            }
+            String address = request.getParameter("address");
+            int orderId = -1;
+            try {
+                orderId = orderService.create(user.getUserId(), address);
+                session.setAttribute("info", "Ваш заказ #" + orderId + " успешно оформлен.");
+                response.sendRedirect(request.getContextPath() + "/profile");
+                return;
+            } catch (ServiceException e) {
+                session.setAttribute("checkoutError", e.getMessage());
+
+                response.sendRedirect(request.getContextPath() + "/cart/checkout");
+                return;
+            }
         }
     }
 }

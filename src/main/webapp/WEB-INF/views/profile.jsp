@@ -26,6 +26,13 @@
                 Ваша почта: <c:out value="${user.userEmail}" />
             </span>
         </div><br>
+        <c:if test="${not empty info}" >
+            <div class="profile-info">
+                <span>
+                    <c:out value="${info}" />
+                </span><br>
+            </div>
+        </c:if>
         <div>
             <form method="post", action="${pageContext.request.contextPath}/profile/logout">
                 <button class="out-account" type="submit">Выйти</button>

@@ -109,7 +109,7 @@ public class CartDAOImpl implements CartDAO {
         BigDecimal productPrice = rs.getBigDecimal("productPrice");
         String imageUrl = rs.getString("imageUrl");
         int stock = rs.getInt("stock");
-        
+
         return new CartItem(id, userId, productId, quantity, productName, productPrice, imageUrl, stock);
     }
 }

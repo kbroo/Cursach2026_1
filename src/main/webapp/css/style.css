@@ -324,8 +324,6 @@ body {
     margin: 0 auto;
     align-items: center;
     background-color: #d6d6d6;
-    border-right: #a26cdc 2px solid;
-    border-left: #a26cdc 2px solid;
     box-shadow: 0 0 10px blueviolet;
     padding-bottom: 40px;
     box-sizing: border-box;
@@ -493,4 +491,5 @@ body {
     width: 50%;
     min-height: 35vh;
     border: 1px solid black;
+    padding: 10px;
 }
