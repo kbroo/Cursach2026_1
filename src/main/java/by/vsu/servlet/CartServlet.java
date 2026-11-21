@@ -51,7 +51,7 @@ public class CartServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/");
                 return;
             }
-            String checkoutError = (String) session.getAttribute("checkout-error");
+            String checkoutError = (String) session.getAttribute("checkoutError");
             if (checkoutError != null) {
                 request.setAttribute("checkoutError", checkoutError);
                 session.removeAttribute("checkoutError");
